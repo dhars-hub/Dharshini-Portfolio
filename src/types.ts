@@ -45,8 +45,9 @@ export interface Project {
   description: string;
   fullDescription?: string;
   tech: string[];
-  githubUrl: string;
+  githubUrl?: string;
   demoUrl?: string;
+  figmaUrl?: string;
   image: string;
   highlights?: string[];
   features?: string[];

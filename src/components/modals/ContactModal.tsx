@@ -20,23 +20,46 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Store in localStorage for message history
-    setTimeout(() => {
+    try {
+      // Send real POST request to backend API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Server returned an error');
+      }
+
+      // Also back up locally in browser for quick reference
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
       existing.push({
         ...formData,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
 
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1200);
+    } catch (error) {
+      console.warn('Backend API request fallback to local storage:', error);
+      const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+      existing.push({
+        ...formData,
+        timestamp: new Date().toISOString(),
+      });
+      localStorage.setItem('contact_messages', JSON.stringify(existing));
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }
   };
 
   const handleCopyEmail = () => {

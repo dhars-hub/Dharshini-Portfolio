@@ -7,15 +7,24 @@ export const HighlightsSection: React.FC = () => {
     <section id="highlights" className="py-20 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Section Header */}
-        <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#818cf8] font-code">
-            ACCOMPLISHMENTS
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
-            Highlights
+        {/* Section Header (Centered with Theme Color & Styled Background) */}
+        <div className="text-center flex flex-col items-center justify-center space-y-3 mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 shadow-[0_0_15px_rgba(251,113,133,0.2)]">
+            <Trophy className="w-4 h-4 text-rose-400" />
+            <span className="text-xs font-bold uppercase tracking-widest font-code">
+              ACHIEVEMENTS & CERTIFICATIONS
+            </span>
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display bg-gradient-to-r from-rose-400 via-pink-300 to-amber-300 bg-clip-text text-transparent drop-shadow-sm">
+            Honors, Awards & Certifications
           </h2>
-          <div className="w-12 h-1 bg-[#818cf8] mx-auto rounded-full mt-3"></div>
+
+          <div className="w-16 h-1 bg-gradient-to-r from-rose-400 to-amber-500 rounded-full shadow-[0_0_10px_rgba(251,113,133,0.5)]"></div>
+
+          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
+            Industry credentials, verified certificate programs, leadership roles, and collegiate event management accolades.
+          </p>
         </div>
 
         {/* 2 Column Cards Grid */}

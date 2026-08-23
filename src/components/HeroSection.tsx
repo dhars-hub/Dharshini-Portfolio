@@ -5,9 +5,10 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 interface HeroSectionProps {
   onOpenContact: () => void;
   onOpenResume: () => void;
+  onNavigateToSection?: (sectionId: string) => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenResume }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenResume, onNavigateToSection }) => {
   return (
     <section id="home" className="relative min-h-[90vh] pt-32 pb-20 flex items-center justify-center bg-nebula-grid overflow-hidden">
       {/* Background glowing blurred radial background elements */}
@@ -69,13 +70,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenR
 
         {/* Call to Action Buttons */}
         <div className="pt-8 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="#projects"
+          <button
+            onClick={() => {
+              if (onNavigateToSection) {
+                onNavigateToSection('projects');
+              } else {
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             className="px-7 py-3.5 rounded-full bg-[#818cf8] hover:bg-[#939cf8] text-[#101b8a] font-bold text-sm sm:text-base transition-all shadow-[0_0_20px_rgba(129,140,248,0.4)] hover:shadow-[0_0_30px_rgba(129,140,248,0.6)] hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
           >
             <span>View Projects</span>
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </button>
 
           <button
             onClick={onOpenResume}
@@ -86,7 +93,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenR
           </button>
 
           <button
-            onClick={onOpenContact}
+            onClick={() => {
+              if (onNavigateToSection) {
+                onNavigateToSection('contact');
+              } else {
+                onOpenContact();
+              }
+            }}
             className="px-7 py-3.5 rounded-full bg-[#12131a] border border-[#818cf8]/50 hover:border-[#818cf8] text-white hover:text-[#818cf8] font-medium text-sm sm:text-base transition-all hover:bg-[#818cf8]/10 hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer shadow-md"
           >
             <span>Contact Me</span>

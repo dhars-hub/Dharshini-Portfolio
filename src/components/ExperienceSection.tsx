@@ -11,15 +11,24 @@ export const ExperienceSection: React.FC = () => {
     <section id="experience" className="py-20 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Section Header */}
-        <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#818cf8] font-code">
-            BACKGROUND
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
-            Experience
+        {/* Section Header (Centered with Theme Color & Styled Background) */}
+        <div className="text-center flex flex-col items-center justify-center space-y-3 mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 shadow-[0_0_15px_rgba(96,165,250,0.2)]">
+            <Briefcase className="w-4 h-4 text-blue-400" />
+            <span className="text-xs font-bold uppercase tracking-widest font-code">
+              PRACTICAL INDUSTRY EXPERIENCE
+            </span>
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-sm">
+            Internship Experience
           </h2>
-          <div className="w-12 h-1 bg-[#818cf8] mx-auto rounded-full mt-3"></div>
+
+          <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(96,165,250,0.5)]"></div>
+
+          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
+            Hands-on technical internships in web design, full-stack application development, and live deployment workflows.
+          </p>
         </div>
 
         {/* Internships Box */}

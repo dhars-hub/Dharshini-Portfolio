@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
+import { SlideDeck, SLIDES_DATA } from './components/SlideDeck';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { EducationSection } from './components/EducationSection';
@@ -8,6 +9,7 @@ import { ExperienceSection } from './components/ExperienceSection';
 import { WorkshopsSection } from './components/WorkshopsSection';
 import { HighlightsSection } from './components/HighlightsSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 
 import { ResumeModal } from './components/modals/ResumeModal';
@@ -21,6 +23,22 @@ export default function App() {
   const [contactOpen, setContactOpen] = useState(false);
   const [demoProject, setDemoProject] = useState<Project | null>(null);
 
+  // Deck Slide Navigation State
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState(1);
+  const [viewMode, setViewMode] = useState<'slides' | 'scroll'>('slides');
+
+  const handleSelectSlide = (targetIndex: number) => {
+    if (targetIndex === currentSlideIndex) return;
+    const direction = targetIndex > currentSlideIndex ? 1 : -1;
+    setSlideDirection(direction);
+    setCurrentSlideIndex(targetIndex);
+  };
+
+  const handleToggleViewMode = () => {
+    setViewMode((prev) => (prev === 'slides' ? 'scroll' : 'slides'));
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-[#e3e1ec] font-body selection:bg-[#818cf8]/30 selection:text-[#bdc2ff] relative">
       
@@ -28,36 +46,43 @@ export default function App() {
       <Navbar
         onOpenResume={() => setResumeOpen(true)}
         onOpenContact={() => setContactOpen(true)}
+        currentSlideIndex={currentSlideIndex}
+        onSelectSlide={handleSelectSlide}
+        viewMode={viewMode}
+        onToggleViewMode={handleToggleViewMode}
       />
 
-      {/* Page Sections */}
+      {/* Main Content Area */}
       <main className="relative z-10">
-        <HeroSection
-          onOpenContact={() => setContactOpen(true)}
-          onOpenResume={() => setResumeOpen(true)}
-        />
-
-        <AboutSection />
-
-        <EducationSection />
-
-        <SkillsSection />
-
-        <ExperienceSection />
-
-        <WorkshopsSection />
-
-        <HighlightsSection />
-
-        <ProjectsSection
-          onOpenDemo={(project) => setDemoProject(project)}
-        />
+        {viewMode === 'slides' ? (
+          /* Side-by-Side Paginated Slide Deck with Colorful Themes */
+          <SlideDeck
+            currentIndex={currentSlideIndex}
+            direction={slideDirection}
+            onSelectSlide={handleSelectSlide}
+            onOpenResume={() => setResumeOpen(true)}
+            onOpenContact={() => setContactOpen(true)}
+            onOpenDemo={(project) => setDemoProject(project)}
+          />
+        ) : (
+          /* Traditional Continuous Scroll Mode */
+          <div className="pt-20">
+            <HeroSection
+              onOpenContact={() => setContactOpen(true)}
+              onOpenResume={() => setResumeOpen(true)}
+            />
+            <AboutSection />
+            <EducationSection />
+            <SkillsSection />
+            <ExperienceSection />
+            <WorkshopsSection />
+            <HighlightsSection />
+            <ProjectsSection onOpenDemo={(project) => setDemoProject(project)} />
+            <ContactSection onOpenResume={() => setResumeOpen(true)} />
+            <Footer onOpenContact={() => setContactOpen(true)} />
+          </div>
+        )}
       </main>
-
-      {/* Footer */}
-      <Footer
-        onOpenContact={() => setContactOpen(true)}
-      />
 
       {/* Modals */}
       <ResumeModal

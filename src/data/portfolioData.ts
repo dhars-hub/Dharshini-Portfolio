@@ -3,6 +3,8 @@ import { Education, SkillCategory, Internship, Workshop, HighlightItem, Project 
 import profileImg from '../assets/images/dharshini_profile_1786213140409.jpg';
 import tollImg from '../assets/images/toll_system_thumb_1786213110029.jpg';
 import fitnessImg from '../assets/images/fitness_app_thumb_1786213125009.jpg';
+import smileStepsImg from '../assets/images/smile_steps_banner_1787381865125.jpg';
+import movieAppImg from '../assets/images/movie_app_ui_banner_1787381883066.jpg';
 
 export const PERSONAL_INFO = {
   name: "Dharshini B",
@@ -53,18 +55,20 @@ export const EDUCATION_LIST: Education[] = [
 
 export const SKILLS_DATA: SkillCategory[] = [
   {
-    title: "Programming",
+    title: "Programming & Backend",
     iconName: "Code",
     skills: [
-      { name: "C", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30" },
+      { name: "Node.js", color: "bg-emerald-600/30 text-emerald-300 border-emerald-500/30", highlighted: true },
+      { name: "Express.js", color: "bg-sky-600/30 text-sky-300 border-sky-500/30", highlighted: true },
+      { name: "REST APIs", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30", highlighted: true },
       { name: "Python", color: "bg-purple-600/30 text-purple-300 border-purple-500/30", highlighted: true },
       { name: "Java", color: "bg-blue-600/30 text-blue-300 border-blue-500/30", highlighted: true },
       { name: "JavaScript (JS)", color: "bg-amber-600/30 text-amber-300 border-amber-500/30", highlighted: true },
       { name: "SQL", color: "bg-sky-600/30 text-sky-300 border-sky-500/30" },
-      { name: "HTML", color: "bg-fuchsia-600/30 text-fuchsia-300 border-fuchsia-500/30" },
-      { name: "CSS", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30" },
+      { name: "MySQL", color: "bg-cyan-600/30 text-cyan-300 border-cyan-500/30" },
       { name: "PHP", color: "bg-violet-600/30 text-violet-300 border-violet-500/30" },
-      { name: "MySQL", color: "bg-cyan-600/30 text-cyan-300 border-cyan-500/30" }
+      { name: "C", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30" },
+      { name: "HTML/CSS", color: "bg-fuchsia-600/30 text-fuchsia-300 border-fuchsia-500/30" }
     ]
   },
   {
@@ -187,6 +191,12 @@ export const WORKSHOPS: Workshop[] = [
     year: "2024"
   },
   {
+    id: "ws-mern",
+    title: 'Two-Day National Workshop on "MERN Stack Development"',
+    type: "Workshop",
+    year: "2024"
+  },
+  {
     id: "ws-8",
     title: "International Workshop on Full stack web development",
     type: "Workshop",
@@ -257,7 +267,7 @@ export const ACHIEVEMENTS: HighlightItem[] = [
   {
     id: "ach-4",
     title: "Organized DumShards Event in WebFest",
-    issuer: "Department of Computer Science",
+    issuer: "Department of Computer Applications",
     type: "achievement",
     icon: "Trophy"
   }
@@ -293,7 +303,6 @@ export const PROJECTS: Project[] = [
     description: "A comprehensive Google Form survey initiative designed to gather community ideas, fitness habit tracking metrics, and actionable lifestyle feedback to boost daily workout engagement.",
     fullDescription: "Built and deployed as a structured Google Form survey platform to collect community responses on daily exercise habits, barriers to active living, and innovative fitness suggestions. Aggregated responses provide valuable analytical insights to formulate technology-driven health interventions.",
     tech: ["Google Forms", "Survey Analytics", "Data Collection"],
-    githubUrl: "https://github.com",
     image: fitnessImg,
     highlights: [
       "Structured Google Form data collection for community fitness preferences",
@@ -306,6 +315,51 @@ export const PROJECTS: Project[] = [
       "Automated response aggregation & metric categorization",
       "Community suggestion box for lifestyle improvement ideas",
       "Analytics summary of user exercise frequency & preferences"
+    ]
+  },
+  {
+    id: "proj-3",
+    title: "Smile Steps",
+    badge: "WEB APPLICATION",
+    description: "An engaging digital pediatric and dental wellness web application designed to encourage consistent oral hygiene routines, healthy habit streaks, and milestone achievements.",
+    fullDescription: "Smile Steps is a specialized health and dental care tracking platform built to transform daily dental routines for children and young adults into fun, rewarding experiences. Includes interactive brushing timers, smile wellness checklists, milestone badges, and direct clinic coordination.",
+    tech: ["React", "JavaScript", "HTML5", "CSS3", "HealthTech"],
+    githubUrl: "https://github.com/dhars-hub/smileSteps",
+    demoUrl: "https://github.com/dhars-hub/smileSteps",
+    image: smileStepsImg,
+    highlights: [
+      "Interactive 2-Minute Tooth Brushing coach with audio visual cues",
+      "Smile milestone achievement rewards & dental streak tracker",
+      "Oral hygiene tips & pediatric dental health guides",
+      "Family profile management and routine logs"
+    ],
+    features: [
+      "Live interactive brushing timer with progress animation",
+      "Daily morning & night habit checklist with reward tokens",
+      "Dental care progress tracking and symptom self-check guide",
+      "Responsive, kid-friendly and family-oriented user interface"
+    ]
+  },
+  {
+    id: "proj-4",
+    title: "Movie App (UI/UX Design)",
+    badge: "UI/UX DESIGN",
+    description: "A high-fidelity mobile application UI/UX prototype created in Figma for seamless movie streaming discovery, cinema theater seat booking, and cinematic media consumption.",
+    fullDescription: "Designed an immersive, modern dark-themed movie exploration and ticket reservation mobile experience in Figma. Features intuitive navigation with hero trending carousels, categorized genre feeds, rich cast & review details, dynamic seat matrix selection, and streamlined checkout flows.",
+    tech: ["Figma", "UI/UX Design", "Wireframing", "Prototyping", "Design System"],
+    figmaUrl: "https://www.figma.com/design/12KdwQKedzgIrpYkSK4cMb/Untitled?node-id=11-41&t=2Uf6TAwsGQ3thrHi-0",
+    image: movieAppImg,
+    highlights: [
+      "High-fidelity Figma UI prototype with cinematic dark aesthetics",
+      "Interactive cinema hall seat selection matrix and pricing calculator",
+      "Rich movie details layout with trailers, cast spotlight, and reviews",
+      "User-tested mobile navigation with bottom bar and quick search"
+    ],
+    features: [
+      "Trending movie carousel with immersive backdrop hero cards",
+      "Interactive seat reservation system (Standard, VIP, Recliner)",
+      "Dark mode visual system with high-contrast accessibility standards",
+      "Complete user journey from movie browsing to instant ticket booking"
     ]
   }
 ];

@@ -7,16 +7,23 @@ export const AboutSection: React.FC = () => {
     <section id="about" className="py-16 sm:py-20 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Section Header */}
-        <div className="text-left space-y-2 mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#818cf8] font-code bg-[#818cf8]/10 px-3 py-1 rounded-full border border-[#818cf8]/20">
-            BIOGRAPHY
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
-            About Me
+        {/* Section Header (Centered with Theme Color & Styled Background) */}
+        <div className="text-center flex flex-col items-center justify-center space-y-3 mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-300 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+            <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+            <span className="text-xs font-bold uppercase tracking-widest font-code">
+              BIOGRAPHY & PROFILE
+            </span>
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display bg-gradient-to-r from-sky-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-sm">
+            About Dharshini B
           </h2>
-          <p className="text-sm text-[#94a3b8] font-body max-w-xl">
-            A software developer with a strong foundation in computer applications, problem solving, and UI/UX engineering.
+
+          <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"></div>
+
+          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
+            Passionate software developer with a strong foundation in computer applications, problem-solving, UI/UX prototyping, and software engineering.
           </p>
         </div>
 

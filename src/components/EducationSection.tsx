@@ -11,17 +11,23 @@ export const EducationSection: React.FC = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-left space-y-2 mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#818cf8] font-code bg-[#818cf8]/10 px-3.5 py-1.5 rounded-full border border-[#818cf8]/20 inline-flex items-center gap-1.5">
-            <GraduationCap className="w-3.5 h-3.5 text-[#818cf8]" />
-            ACADEMIC BACKGROUND
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
-            Education Details
+        {/* Section Header (Centered with Theme Color & Styled Background) */}
+        <div className="text-center flex flex-col items-center justify-center space-y-3 mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+            <GraduationCap className="w-4 h-4 text-emerald-400" />
+            <span className="text-xs font-bold uppercase tracking-widest font-code">
+              ACADEMIC BACKGROUND
+            </span>
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm">
+            Education Details & Qualifications
           </h2>
-          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-xl">
-            My academic journey from secondary school to master's degree with academic performance scores.
+
+          <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
+
+          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
+            My academic journey spanning secondary school, undergraduate computer applications, and Master of Computer Applications (MCA).
           </p>
         </div>
 
