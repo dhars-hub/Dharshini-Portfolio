@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MapPin, Send, CheckCircle2, Copy, Sparkles, Linkedin, Github, FileText, MessageSquare, PhoneCall } from 'lucide-react';
+import { Send, CheckCircle2, Linkedin, Github, FileText, MessageSquare, Briefcase, Globe } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface ContactSectionProps {
@@ -15,13 +15,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +57,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
         {/* Section Header (Centered with Theme Color & Styled Background) */}
         <div className="text-center flex flex-col items-center justify-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
-            <Mail className="w-4 h-4 text-cyan-400" />
+            <MessageSquare className="w-4 h-4 text-cyan-400" />
             <span className="text-xs font-bold uppercase tracking-widest font-code">
               GET IN TOUCH & CONNECT
             </span>
@@ -83,68 +76,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column: Quick Connect Cards */}
-          <div className="lg:col-span-5 space-y-4 text-left">
+          {/* Left Column: Quick Connect Profiles & Resume */}
+          <div className="lg:col-span-5 space-y-4 text-left flex flex-col justify-center">
             
-            {/* Direct Email Card */}
-            <div className="bg-[#12131a] p-6 rounded-2xl border border-[#818cf8]/30 hover:border-[#818cf8]/70 transition-all shadow-xl space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-white font-display">Direct Email</h3>
-                    <p className="text-xs text-[#94a3b8] font-code">{PERSONAL_INFO.email}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={handleCopyEmail}
-                  className="p-2 rounded-lg bg-[#1e1b4b] border border-[#818cf8]/30 text-[#818cf8] hover:text-white transition-all cursor-pointer"
-                  title="Copy email address"
-                >
-                  {copiedEmail ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                </button>
-              </div>
-
-              {copiedEmail && (
-                <p className="text-[11px] font-code text-emerald-400">✓ Email copied to clipboard!</p>
-              )}
-
-              <a
-                href={`mailto:${PERSONAL_INFO.email}`}
-                className="block w-full py-2.5 rounded-xl bg-[#1e1b4b] hover:bg-[#2a266b] text-center text-xs font-semibold text-[#bdc2ff] border border-[#818cf8]/30 transition-all"
-              >
-                Send via Default Mail Client →
-              </a>
-            </div>
-
-            {/* Location & Status Card */}
-            <div className="bg-[#12131a] p-6 rounded-2xl border border-[#818cf8]/30 shadow-xl space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white font-display">Current Location</h3>
-                  <p className="text-xs text-[#94a3b8]">{PERSONAL_INFO.location}</p>
-                </div>
-              </div>
-              <div className="pt-2 flex items-center gap-2 text-xs font-code text-emerald-300">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                <span>Open for Full-Time & Internship Opportunities</span>
-              </div>
-            </div>
-
-            {/* Social & Resume Links */}
+            {/* Social & Professional Links */}
             <div className="grid grid-cols-2 gap-3">
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl bg-[#12131a] border border-[#818cf8]/30 hover:border-[#818cf8] text-white hover:text-[#818cf8] transition-all flex items-center gap-2.5 cursor-pointer group"
+                className="p-4 rounded-xl bg-[#12131a] border border-[#818cf8]/30 hover:border-[#818cf8] text-white hover:text-[#818cf8] transition-all flex items-center gap-2.5 cursor-pointer group shadow-lg"
               >
-                <div className="p-2 rounded-lg bg-[#1e1b4b] group-hover:bg-[#818cf8] group-hover:text-[#101b8a] transition-all">
+                <div className="p-2.5 rounded-lg bg-[#1e1b4b] group-hover:bg-[#818cf8] group-hover:text-[#101b8a] transition-all">
                   <Linkedin className="w-4 h-4" />
                 </div>
                 <div>
@@ -157,9 +100,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl bg-[#12131a] border border-[#818cf8]/30 hover:border-[#818cf8] text-white hover:text-[#818cf8] transition-all flex items-center gap-2.5 cursor-pointer group"
+                className="p-4 rounded-xl bg-[#12131a] border border-[#818cf8]/30 hover:border-[#818cf8] text-white hover:text-[#818cf8] transition-all flex items-center gap-2.5 cursor-pointer group shadow-lg"
               >
-                <div className="p-2 rounded-lg bg-[#1e1b4b] group-hover:bg-[#818cf8] group-hover:text-[#101b8a] transition-all">
+                <div className="p-2.5 rounded-lg bg-[#1e1b4b] group-hover:bg-[#818cf8] group-hover:text-[#101b8a] transition-all">
                   <Github className="w-4 h-4" />
                 </div>
                 <div>
@@ -171,7 +114,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
             <button
               onClick={onOpenResume}
-              className="w-full py-3 rounded-xl bg-[#1e1b4b] border border-[#818cf8]/50 hover:border-[#818cf8] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(129,140,248,0.25)]"
+              className="w-full py-4 rounded-xl bg-[#1e1b4b] border border-[#818cf8]/50 hover:border-[#818cf8] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(129,140,248,0.25)]"
             >
               <FileText className="w-4 h-4 text-[#818cf8]" />
               <span>View & Download Curriculum Vitae</span>

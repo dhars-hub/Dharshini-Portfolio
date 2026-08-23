@@ -194,13 +194,7 @@ export const WORKSHOPS: Workshop[] = [
     id: "ws-mern",
     title: 'Two-Day National Workshop on "MERN Stack Development"',
     type: "Workshop",
-    year: "2024"
-  },
-  {
-    id: "ws-8",
-    title: "International Workshop on Full stack web development",
-    type: "Workshop",
-    year: "2024"
+    year: "2026"
   }
 ];
 
