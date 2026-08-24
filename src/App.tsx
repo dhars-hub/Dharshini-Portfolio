@@ -15,6 +15,7 @@ import { Footer } from './components/Footer';
 import { ResumeModal } from './components/modals/ResumeModal';
 import { ContactModal } from './components/modals/ContactModal';
 import { ProjectDemoModal } from './components/modals/ProjectDemoModal';
+import { AIBot } from './components/AIBot';
 
 import { Project } from './types';
 
@@ -83,6 +84,13 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Floating AI Assistant Bot */}
+      <AIBot
+        onOpenResume={() => setResumeOpen(true)}
+        onOpenContact={() => setContactOpen(true)}
+        onSelectSlide={handleSelectSlide}
+      />
 
       {/* Modals */}
       <ResumeModal

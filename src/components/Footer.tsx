@@ -24,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             {PERSONAL_INFO.name}
           </h2>
           <p className="text-sm text-[#818cf8] font-medium tracking-wide">
-            Built with Passion
+            {PERSONAL_INFO.title} • MCA Graduate
           </p>
           <div className="w-16 h-1 bg-[#818cf8] mx-auto rounded-full mt-3 shadow-[0_0_12px_#818cf8]"></div>
         </div>

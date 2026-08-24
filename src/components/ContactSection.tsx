@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, Linkedin, Github, FileText, MessageSquare, Briefcase, Globe } from 'lucide-react';
+import { Send, CheckCircle2, Linkedin, Github, FileText, MessageSquare, Briefcase, Globe, Mail, ExternalLink, Copy, Check } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface ContactSectionProps {
@@ -13,37 +13,51 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
     subject: '',
     message: '',
   });
+  const [lastSubmittedData, setLastSubmittedData] = useState<{
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const submitted = { ...formData };
 
     try {
-      const response = await fetch('/api/contact', {
+      // 1. Post to backend server
+      await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitted),
       });
 
-      if (!response.ok) {
-        throw new Error('Server returned an error');
-      }
-
+      // 2. Save locally for user history
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
-      existing.push({ ...formData, timestamp: new Date().toISOString() });
+      existing.push({ ...submitted, timestamp: new Date().toISOString() });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
 
+      setLastSubmittedData(submitted);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       console.warn('Backend fallback:', error);
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
-      existing.push({ ...formData, timestamp: new Date().toISOString() });
+      existing.push({ ...submitted, timestamp: new Date().toISOString() });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
 
+      setLastSubmittedData(submitted);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -112,6 +126,34 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
               </a>
             </div>
 
+            {/* Direct Email Address Card with Copy and Click-to-Email */}
+            <div className="p-4 rounded-xl bg-[#12131a] border border-[#818cf8]/30 shadow-lg">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-lg bg-[#1e1b4b] text-[#818cf8]">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#94a3b8] block font-code uppercase">DIRECT INBOX</span>
+                    <a
+                      href={`mailto:${PERSONAL_INFO.email}`}
+                      className="text-xs sm:text-sm font-bold text-white hover:text-[#818cf8] transition-colors"
+                    >
+                      {PERSONAL_INFO.email}
+                    </a>
+                  </div>
+                </div>
+                <button
+                  onClick={handleCopyEmail}
+                  className="px-2.5 py-1.5 rounded-lg bg-[#1e1b4b] border border-[#818cf8]/30 hover:border-[#818cf8] text-[#c6c5d5] hover:text-white text-xs font-medium flex items-center gap-1 transition-all cursor-pointer"
+                  title="Copy email address"
+                >
+                  {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+            </div>
+
             <button
               onClick={onOpenResume}
               className="w-full py-4 rounded-xl bg-[#1e1b4b] border border-[#818cf8]/50 hover:border-[#818cf8] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(129,140,248,0.25)]"
@@ -127,20 +169,34 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
               <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
               {isSubmitted ? (
-                <div className="py-12 text-center space-y-4 animate-fadeIn">
+                <div className="py-8 text-center space-y-4 animate-fadeIn">
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 mx-auto flex items-center justify-center shadow-[0_0_25px_rgba(52,211,153,0.3)]">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold font-display text-white">Message Delivered Successfully!</h3>
+                  <h3 className="text-2xl font-bold font-display text-white">Message Sent Successfully!</h3>
                   <p className="text-sm text-[#94a3b8] font-body max-w-md mx-auto">
-                    Thank you for reaching out, Dharshini will respond to your email as soon as possible.
+                    Thank you for reaching out! Your note has been registered and Dharshini will get in touch with you shortly.
                   </p>
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="mt-4 px-6 py-2.5 rounded-full bg-[#1e1b4b] text-[#bdc2ff] border border-[#818cf8]/40 hover:text-white text-xs font-semibold cursor-pointer"
-                  >
-                    Send Another Note
-                  </button>
+
+                  {lastSubmittedData && (
+                    <div className="mt-4 p-4 rounded-xl bg-[#1a1b22] border border-[#818cf8]/20 text-left max-w-md mx-auto space-y-2">
+                      <div className="text-xs text-[#bdc2ff]">
+                        <strong className="text-white">Subject:</strong> {lastSubmittedData.subject}
+                      </div>
+                      <div className="text-xs text-[#94a3b8] line-clamp-3">
+                        <strong className="text-white">Message:</strong> {lastSubmittedData.message}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-center pt-2">
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="px-6 py-2.5 rounded-full bg-[#1e1b4b] text-[#bdc2ff] border border-[#818cf8]/40 hover:text-white text-xs font-semibold transition-all cursor-pointer hover:bg-[#2e2b6b]"
+                    >
+                      Send Another Note
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 relative z-10">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Download, Copy, Check, FileText, GraduationCap, Briefcase, Award, Code, MapPin, Mail, Printer, Sparkles, BookOpen } from 'lucide-react';
+import { X, Download, Copy, Check, FileText, GraduationCap, Briefcase, Award, Code, MapPin, Mail, Printer, Sparkles, BookOpen, FileCheck2 } from 'lucide-react';
 import { PERSONAL_INFO, EDUCATION_LIST, SKILLS_DATA, INTERNSHIPS, CERTIFICATIONS, ACHIEVEMENTS, PROJECTS, WORKSHOPS } from '../../data/portfolioData';
+import { generateResumePDF } from '../../utils/pdfGenerator';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -11,8 +12,23 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [pdfDownloaded, setPdfDownloaded] = useState(false);
+  const [isPdfGenerating, setIsPdfGenerating] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleDownloadDirectPDF = () => {
+    setIsPdfGenerating(true);
+    try {
+      generateResumePDF();
+      setPdfDownloaded(true);
+      setTimeout(() => setPdfDownloaded(false), 3000);
+    } catch (err) {
+      console.error("PDF generation failed, falling back to browser print:", err);
+      handleSaveAndPrintPDF();
+    } finally {
+      setIsPdfGenerating(false);
+    }
+  };
 
   const generateFullResumeHtml = () => {
     return `<!DOCTYPE html>
@@ -444,14 +460,25 @@ ${ACHIEVEMENTS.map(a => `• ${a.title} (${a.issuer})`).join('\n')}
               <span>{downloaded ? 'Downloaded' : '.TXT'}</span>
             </button>
 
-            {/* Primary Save & Print PDF / Download Button */}
+            {/* Print / Save as PDF Fallback */}
             <button
               onClick={handleSaveAndPrintPDF}
-              className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white text-xs font-bold transition-all hover:brightness-110 flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(129,140,248,0.4)]"
-              title="Save directly as PDF or Print"
+              className="px-3 py-1.5 rounded-lg bg-[#1e1b4b] border border-[#818cf8]/30 text-xs font-semibold text-[#bdc2ff] hover:text-white hover:border-[#818cf8] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+              title="Open browser print dialog to save as PDF"
             >
-              {pdfDownloaded ? <Check className="w-4 h-4 text-white" /> : <Printer className="w-4 h-4 text-white" />}
-              <span>{pdfDownloaded ? 'Resume Downloaded!' : 'Save & Print PDF'}</span>
+              <Printer className="w-3.5 h-3.5 text-[#818cf8]" />
+              <span>Print View</span>
+            </button>
+
+            {/* Primary Direct PDF Download Button */}
+            <button
+              onClick={handleDownloadDirectPDF}
+              disabled={isPdfGenerating}
+              className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white text-xs font-bold transition-all hover:brightness-110 flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(129,140,248,0.4)] disabled:opacity-60"
+              title="Download Resume as PDF document"
+            >
+              {pdfDownloaded ? <Check className="w-4 h-4 text-white" /> : <Download className="w-4 h-4 text-white" />}
+              <span>{pdfDownloaded ? 'PDF Downloaded!' : isPdfGenerating ? 'Generating PDF...' : 'Download PDF (.pdf)'}</span>
             </button>
 
             <button
@@ -611,10 +638,18 @@ ${ACHIEVEMENTS.map(a => `• ${a.title} (${a.issuer})`).join('\n')}
           <div className="flex items-center gap-2">
             <button
               onClick={handleSaveAndPrintPDF}
-              className="px-5 py-2 rounded-full bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white text-xs font-bold transition-all hover:brightness-110 flex items-center gap-1.5 cursor-pointer shadow-md"
+              className="px-4 py-2 rounded-full bg-[#1e1b4b] border border-[#818cf8]/30 hover:border-[#818cf8] text-[#c6c5d5] hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5 text-[#818cf8]" />
+              <span>Print / Save as PDF</span>
+            </button>
+            <button
+              onClick={handleDownloadDirectPDF}
+              disabled={isPdfGenerating}
+              className="px-5 py-2 rounded-full bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white text-xs font-bold transition-all hover:brightness-110 flex items-center gap-1.5 cursor-pointer shadow-md disabled:opacity-60"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Download & Print PDF</span>
+              <span>{isPdfGenerating ? 'Generating PDF...' : 'Download PDF (.pdf)'}</span>
             </button>
             <button
               onClick={onClose}

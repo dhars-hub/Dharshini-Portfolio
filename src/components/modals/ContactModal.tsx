@@ -14,6 +14,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     subject: '',
     message: ''
   });
+  const [lastSubmitted, setLastSubmitted] = useState<{
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -23,27 +29,25 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const submitted = { ...formData };
 
     try {
       // Send real POST request to backend API
-      const response = await fetch('/api/contact', {
+      await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitted),
       });
-
-      if (!response.ok) {
-        throw new Error('Server returned an error');
-      }
 
       // Also back up locally in browser for quick reference
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
       existing.push({
-        ...formData,
+        ...submitted,
         timestamp: new Date().toISOString(),
       });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
 
+      setLastSubmitted(submitted);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -51,11 +55,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
       console.warn('Backend API request fallback to local storage:', error);
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
       existing.push({
-        ...formData,
+        ...submitted,
         timestamp: new Date().toISOString(),
       });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
 
+      setLastSubmitted(submitted);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -116,14 +121,24 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
               <h3 className="text-lg font-bold text-white font-display">Message Sent Successfully!</h3>
               <p className="text-xs text-emerald-200/80">
-                Thank you for reaching out. Dharshini will respond to your email shorty.
+                Thank you for reaching out! Your message has been received and Dharshini will get in touch with you shortly.
               </p>
-              <button
-                onClick={() => setIsSubmitted(false)}
-                className="mt-2 px-5 py-2 rounded-full bg-emerald-500 text-slate-950 text-xs font-bold hover:bg-emerald-400 transition-all cursor-pointer"
-              >
-                Send Another Message
-              </button>
+
+              {lastSubmitted && (
+                <div className="p-3 rounded-lg bg-[#12131a] border border-emerald-500/30 text-left text-xs space-y-1 my-2">
+                  <p className="text-[#bdc2ff]"><strong className="text-white">Subject:</strong> {lastSubmitted.subject || 'General Inquiry'}</p>
+                  <p className="text-[#94a3b8] line-clamp-2"><strong className="text-white">Message:</strong> {lastSubmitted.message}</p>
+                </div>
+              )}
+
+              <div className="flex items-center justify-center pt-2">
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="px-5 py-2 rounded-full bg-[#1e1b4b] text-[#bdc2ff] border border-[#818cf8]/40 hover:text-white text-xs font-semibold transition-all cursor-pointer hover:bg-[#2e2b6b]"
+                >
+                  Send Another Message
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">

@@ -21,10 +21,6 @@ export const AboutSection: React.FC = () => {
           </h2>
 
           <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"></div>
-
-          <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
-            Passionate software developer with a strong foundation in computer applications, problem-solving, UI/UX prototyping, and software engineering.
-          </p>
         </div>
 
         {/* Main Bio Glass Card */}

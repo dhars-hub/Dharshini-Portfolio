@@ -8,9 +8,9 @@ import movieAppImg from '../assets/images/movie_app_ui_banner_1787381883066.jpg'
 
 export const PERSONAL_INFO = {
   name: "Dharshini B",
-  title: "Full Stack Developer & UI/UX Designer Enthusiast",
-  subtitle: "MCA Student | Problem Solver | Tech Enthusiast",
-  bio: "Passionate Full Stack Developer & UI/UX Designer Enthusiast with expertise in Python, Java, SQL, modern Web Development, and human-centered design. Experienced in building scalable applications and intuitive user experiences with strong analytical and problem-solving skills.",
+  title: "Full Stack Developer",
+  subtitle: "Full Stack Developer | MCA Graduate | Problem Solver",
+  bio: "Passionate Full Stack Developer with expertise in Python, Java, SQL, modern MERN & Web Development, and human-centered design. Experienced in building scalable applications and intuitive user experiences with strong analytical and problem-solving skills.",
   email: "dharshinib89@gmail.com",
   location: "Trichy, Tamil Nadu, India",
   profileImage: profileImg,
@@ -75,8 +75,8 @@ export const SKILLS_DATA: SkillCategory[] = [
     title: "Domain",
     iconName: "Layers",
     skills: [
-      { name: "Software Developer", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30", highlighted: true },
-      { name: "Web Development", color: "bg-purple-600/30 text-purple-300 border-purple-500/30", highlighted: true }
+      { name: "Full Stack Developer", color: "bg-indigo-600/30 text-indigo-300 border-indigo-500/30", highlighted: true },
+      { name: "Software Developer", color: "bg-purple-600/30 text-purple-300 border-purple-500/30", highlighted: true }
     ]
   },
   {

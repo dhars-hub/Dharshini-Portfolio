@@ -108,11 +108,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={(e) => handleNavClick(e, navLinks[0])}
           className="text-lg sm:text-xl md:text-2xl font-bold font-display text-white hover:text-[#818cf8] transition-colors flex items-center gap-2 group shrink-0 whitespace-nowrap cursor-pointer text-left"
         >
-          <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400 bg-clip-text text-transparent whitespace-nowrap">
-            {PERSONAL_INFO.name}
-          </span>
+          <div className="flex flex-col">
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400 bg-clip-text text-transparent whitespace-nowrap">
+              {PERSONAL_INFO.name}
+            </span>
+            <span className="text-[10px] font-code text-[#818cf8] font-semibold -mt-1 hidden sm:block">
+              {PERSONAL_INFO.title}
+            </span>
+          </div>
           <span
-            className="inline-block w-2 h-2 rounded-full transition-colors duration-500 animate-pulse"
+            className="inline-block w-2 h-2 rounded-full transition-colors duration-500 animate-pulse self-center"
             style={{ backgroundColor: activeSlideData.themeColor }}
           />
         </button>
