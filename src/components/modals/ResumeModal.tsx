@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Download, Copy, Check, FileText, GraduationCap, Briefcase, Award, Code, MapPin, Mail, Printer, Sparkles, BookOpen, FileCheck2 } from 'lucide-react';
+import { X, Download, Copy, Check, FileText, GraduationCap, Briefcase, Award, Code, MapPin, Mail, Printer, Sparkles, BookOpen, FileCheck2, Linkedin, Github } from 'lucide-react';
 import { PERSONAL_INFO, EDUCATION_LIST, SKILLS_DATA, INTERNSHIPS, CERTIFICATIONS, ACHIEVEMENTS, PROJECTS, WORKSHOPS } from '../../data/portfolioData';
 import { generateResumePDF } from '../../utils/pdfGenerator';
 
@@ -201,6 +201,8 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
     <div class="title">${PERSONAL_INFO.title}</div>
     <div class="contact-info">
       <span>✉ ${PERSONAL_INFO.email}</span>
+      <span>🔗 <a href="${PERSONAL_INFO.linkedin}" target="_blank">LinkedIn: linkedin.com/in/dharshini-b-44a34124a/</a></span>
+      <span>💻 <a href="${PERSONAL_INFO.github}" target="_blank">GitHub: github.com/dhars-hub</a></span>
       <span>📍 ${PERSONAL_INFO.location}</span>
       <span>🎓 MCA (2025 - 2027)</span>
     </div>
@@ -302,6 +304,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 ${PERSONAL_INFO.name.toUpperCase()}
 ${PERSONAL_INFO.title}
 Email: ${PERSONAL_INFO.email} | Location: ${PERSONAL_INFO.location}
+LinkedIn: ${PERSONAL_INFO.linkedin} | GitHub: ${PERSONAL_INFO.github}
 
 OBJECTIVE & PROFILE:
 ${PERSONAL_INFO.bio}
@@ -336,6 +339,8 @@ ${ACHIEVEMENTS.map(a => `- ${a.title} (${a.issuer})`).join('\n')}
 DHARSHINI B - RESUME / CURRICULUM VITAE
 Full Stack Developer & UI/UX Designer
 Email: ${PERSONAL_INFO.email}
+LinkedIn: ${PERSONAL_INFO.linkedin}
+GitHub: ${PERSONAL_INFO.github}
 Location: ${PERSONAL_INFO.location}
 ====================================================
 
@@ -504,6 +509,22 @@ ${ACHIEVEMENTS.map(a => `• ${a.title} (${a.issuer})`).join('\n')}
                 <span className="flex items-center gap-1.5">
                   <Mail className="w-3.5 h-3.5 text-[#818cf8]" /> {PERSONAL_INFO.email}
                 </span>
+                <a 
+                  href={PERSONAL_INFO.linkedin} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-[#818cf8] hover:text-sky-300 transition-colors"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-[#818cf8]" /> linkedin.com/in/dharshini-b-44a34124a/
+                </a>
+                <a 
+                  href={PERSONAL_INFO.github} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-[#818cf8] hover:text-sky-300 transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5 text-[#818cf8]" /> github.com/dhars-hub
+                </a>
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#818cf8]" /> {PERSONAL_INFO.location}
                 </span>

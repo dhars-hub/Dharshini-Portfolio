@@ -71,7 +71,7 @@ export function generateResumePDF(): void {
   doc.setFontSize(8.5);
   doc.setTextColor(226, 232, 240);
   doc.text('GitHub: github.com/dhars-hub', pageWidth - margin - 6, y + 8, { align: 'right' });
-  doc.text('LinkedIn: linkedin.com/in/dharshini-b', pageWidth - margin - 6, y + 14, { align: 'right' });
+  doc.text('LinkedIn: linkedin.com/in/dharshini-b-44a34124a/', pageWidth - margin - 6, y + 14, { align: 'right' });
   doc.text('Location: Trichy, Tamil Nadu, India', pageWidth - margin - 6, y + 20, { align: 'right' });
 
   y += 28;
