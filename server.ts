@@ -263,8 +263,14 @@ async function startServer() {
         fallbackReply = `**Java** is a class-based, object-oriented programming language designed to have few implementation dependencies ("Write Once, Run Anywhere"). It enforces strong Object-Oriented Principles (Encapsulation, Inheritance, Polymorphism, Abstraction) for building enterprise-scale applications.`;
       }
       // 5. Specific inquiries about Dharshini's role & background
-      else if (lower.includes("role") || lower.includes("position") || lower.includes("job") || lower.includes("title")) {
-        fallbackReply = `Dharshini B is a **Full Stack Developer**. She designs end-to-end web applications, develops REST APIs, and creates user-centered UI/UX prototypes.`;
+      else if (lower.includes("role") || lower.includes("position") || lower.includes("title") || lower.includes("what does she do") || lower.includes("specific role")) {
+        fallbackReply = `Dharshini B is a **Full Stack Developer & UI/UX Designer**. 
+
+**Her Core Focus Areas:**
+• **End-to-End Web Applications**: Building robust web applications using the MERN Stack (MongoDB, Express, React, Node.js).
+• **Backend & REST APIs**: Designing scalable server architecture and secure API endpoints.
+• **Computer Vision & Automation**: Developing intelligent Python & OpenCV tools (e.g. Automated Toll Gate License Plate Recognition).
+• **User Experience (UI/UX)**: Crafting accessible, user-centered interface prototypes in Figma and Tailwind CSS.`;
       } else if (lower.includes("smile step") || lower.includes("smile") || lower.includes("disabilit")) {
         fallbackReply = `**Smile Steps** is a featured MERN web application designed for children with developmental disabilities. It provides a calming, sensory-friendly UI with guided 2-minute visual brushing coaches, progress tracking, and positive reinforcement reward milestones.`;
       } else if (lower.includes("toll") || lower.includes("gate") || lower.includes("vehicle") || lower.includes("plate")) {

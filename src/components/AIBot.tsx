@@ -124,14 +124,29 @@ Feel free to ask me anything about web development, technical programming concep
       let fallbackText = "";
       let fallbackAction: 'resume' | 'projects' | 'contact' | undefined;
 
-      // 1. Hiring, Employment, Collaboration, Contact inquiries
+      // 1. Specific inquiries about Dharshini's role & specialization
       if (
+        lower.includes("role") ||
+        lower.includes("position") ||
+        lower.includes("designation") ||
+        lower.includes("title") ||
+        lower.includes("what does she do") ||
+        lower.includes("specific role")
+      ) {
+        fallbackText = `Dharshini B is a **Full Stack Developer & UI/UX Designer**. 
+
+**Her Core Focus Areas:**
+• **End-to-End Web Applications**: Building robust, responsive web applications using the MERN Stack (MongoDB, Express, React, Node.js).
+• **Backend & REST APIs**: Designing scalable server architecture, database schemas, and secure API endpoints.
+• **Computer Vision & Automation**: Developing intelligent Python & OpenCV tools (e.g. Automated Toll Plate Recognition).
+• **User Experience (UI/UX)**: Crafting accessible, user-centered interface prototypes in Figma and Tailwind CSS.`;
+      }
+      // 2. Hiring, Employment, Collaboration, Contact inquiries
+      else if (
         lower.includes("hire") ||
         lower.includes("how to hire") ||
         lower.includes("how can hire") ||
         lower.includes("hiring") ||
-        lower.includes("job") ||
-        lower.includes("recruitment") ||
         lower.includes("recruit") ||
         lower.includes("contact") ||
         lower.includes("reach") ||
