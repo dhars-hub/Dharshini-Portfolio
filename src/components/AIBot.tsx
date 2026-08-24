@@ -34,11 +34,9 @@ export const AIBot: React.FC<AIBotProps> = ({ onOpenResume, onOpenContact, onSel
     {
       id: 'welcome-1',
       role: 'assistant',
-      content: `👋 Hello! I am Dharshini's **AI Portfolio Assistant**.
+      content: `👋 Hello! I am Dharshini's AI Assistant.
 
-Dharshini is a dedicated **Full Stack Developer** currently completing her MCA with an outstanding **9.00 CGPA**. 
-
-How can I help you today? You can ask about her projects (such as *Smile Steps*), tech stack, internships, or request her resume!`,
+Feel free to ask me anything about web development, technical programming concepts (like React, Node.js, Python, SQL), or Dharshini's full-stack projects and experience!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -88,6 +86,10 @@ How can I help you today? You can ask about her projects (such as *Smile Steps*)
         })
       });
 
+      if (!res.ok) {
+        throw new Error(`Server returned status ${res.status}`);
+      }
+
       const data = await res.json();
 
       let replyContent = "I am happy to assist you with any information regarding Dharshini's full-stack development experience.";
@@ -95,14 +97,14 @@ How can I help you today? You can ask about her projects (such as *Smile Steps*)
         replyContent = data.reply;
       }
 
-      // Check if message is asking about resume
+      // Only attach specific contextual actions when explicitly requested
       const lower = messageContent.toLowerCase();
       let action: 'resume' | 'projects' | 'contact' | undefined;
-      if (lower.includes('resume') || lower.includes('cv') || lower.includes('download')) {
+      if (/\b(resume|cv|curriculum vitae)\b/i.test(lower)) {
         action = 'resume';
-      } else if (lower.includes('project') || lower.includes('demo') || lower.includes('build')) {
+      } else if (/\b(projects?|demo|showcase|portfolio works?)\b/i.test(lower)) {
         action = 'projects';
-      } else if (lower.includes('contact') || lower.includes('hire') || lower.includes('reach')) {
+      } else if (/\b(contact|hire|email|get in touch)\b/i.test(lower)) {
         action = 'contact';
       }
 
@@ -117,14 +119,33 @@ How can I help you today? You can ask about her projects (such as *Smile Steps*)
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
       console.error("Failed to fetch AI reply:", err);
+      // Smart contextual fallback based on user inquiry without forcing CV
+      const lower = messageContent.toLowerCase();
+      let fallbackText = "I can help answer any questions about full-stack development, coding concepts (like React, Python, Java, SQL), or Dharshini's projects. What would you like to know?";
+      
+      if (lower.includes("react")) {
+        fallbackText = "**React** is a popular component-based JavaScript library for building responsive user interfaces with a declarative Virtual DOM paradigm.";
+      } else if (lower.includes("tech stack") || lower.includes("technical stack") || lower.includes("skills") || lower.includes("skill") || lower.includes("technologies") || lower.includes("stack") || lower.includes("languages")) {
+        fallbackText = `Dharshini's core **Technical Stack** includes:
+• **MERN Full Stack**: MongoDB, Express.js, React, Node.js
+• **Core Languages**: Python, Java, SQL, MySQL, PHP, C, JavaScript (ES6+)
+• **Frontend & UI/UX**: Tailwind CSS, HTML5, CSS3, Figma Design
+• **Specializations**: RESTful APIs, OpenCV Computer Vision, Full-Stack Web Architecture`;
+      } else if (lower.includes("mern")) {
+        fallbackText = "**MERN Stack** stands for MongoDB, Express.js, React, and Node.js—enabling full JavaScript full-stack application development from database to UI.";
+      } else if (lower.includes("python")) {
+        fallbackText = "**Python** is a versatile programming language utilized for web backends, automated scripting, and computer vision / AI applications.";
+      } else if (lower.includes("smile step")) {
+        fallbackText = "**Smile Steps** is Dharshini's featured MERN web app designed for children with developmental disabilities, featuring routine coaching timers and positive reward milestones.";
+      }
+
       setMessages((prev) => [
         ...prev,
         {
           id: `assistant_fallback_${Date.now()}`,
           role: 'assistant',
-          content: `Dharshini B is a **Full Stack Developer** with expertise in Python, Java, SQL, Node.js, Express.js, and React. Feel free to download her resume in PDF or contact her through the portfolio!`,
+          content: fallbackText,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          action: 'resume'
         }
       ]);
     } finally {
@@ -137,7 +158,7 @@ How can I help you today? You can ask about her projects (such as *Smile Steps*)
       {
         id: `welcome_${Date.now()}`,
         role: 'assistant',
-        content: `Chat history reset. How can I assist you with exploring Dharshini's **Full Stack Developer** credentials?`,
+        content: `Chat history reset. What would you like to explore or ask about?`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);

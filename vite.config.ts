@@ -4,8 +4,13 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  // Automatically use repository subpath only when running in GitHub Actions CI/CD.
+  // For Vercel, Netlify, custom domains, and local preview, default to root or relative base.
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+  const base = process.env.VITE_BASE_PATH || (isGitHubActions ? '/Dharshini-Portfolio/' : './');
+
   return {
-    base:'/Dharshini-Portfolio/',
+    base,
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
