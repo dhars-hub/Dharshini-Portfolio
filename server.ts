@@ -279,11 +279,28 @@ async function startServer() {
 2. **Web Development & UI/UX Design Intern** at *Unified Mentor* (Component design systems and responsive layouts).`;
       } else if (lower.includes("resume") || lower.includes("cv") || lower.includes("transcript")) {
         fallbackReply = `You can view or download Dharshini's full resume using the **"Download Resume"** button on the portfolio header or navigation bar.`;
-      } else if (lower.includes("contact") || lower.includes("email") || lower.includes("hire") || lower.includes("reach") || lower.includes("linkedin") || lower.includes("github")) {
-        fallbackReply = `You can connect with Dharshini via:
-• **LinkedIn**: linkedin.com/in/dharshini-b-44a34124a/
-• **GitHub**: github.com/dhars-hub
-• **Message Form**: Use the **Get In Touch** section below to send a message directly.`;
+      } else if (
+        lower.includes("hire") ||
+        lower.includes("how to hire") ||
+        lower.includes("how can hire") ||
+        lower.includes("hiring") ||
+        lower.includes("job") ||
+        lower.includes("opportunity") ||
+        lower.includes("contact") ||
+        lower.includes("reach") ||
+        lower.includes("email") ||
+        lower.includes("freelance") ||
+        lower.includes("connect") ||
+        lower.includes("linkedin") ||
+        lower.includes("github")
+      ) {
+        fallbackReply = `Dharshini B is actively open for **Full-Time Full Stack Developer** roles and **Software Engineering** opportunities!
+
+**How to connect & hire her:**
+• **Direct Portfolio Message**: Scroll down to the **Get In Touch** section on this page to send a direct message.
+• **LinkedIn**: [linkedin.com/in/dharshini-b-44a34124a/](https://linkedin.com/in/dharshini-b-44a34124a/)
+• **GitHub**: [github.com/dhars-hub](https://github.com/dhars-hub)
+• **Location**: Trichy, Tamil Nadu, India (Available for on-site & remote roles)`;
       } else {
         fallbackReply = `I'm happy to help! You can ask me any technical programming questions (about React, Python, Java, SQL, Node.js), or inquire about Dharshini's technical stack, projects, or experience. What would you like to know?`;
       }

@@ -118,25 +118,165 @@ Feel free to ask me anything about web development, technical programming concep
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
-      console.error("Failed to fetch AI reply:", err);
-      // Smart contextual fallback based on user inquiry without forcing CV
-      const lower = messageContent.toLowerCase();
-      let fallbackText = "I can help answer any questions about full-stack development, coding concepts (like React, Python, Java, SQL), or Dharshini's projects. What would you like to know?";
-      
-      if (lower.includes("react")) {
-        fallbackText = "**React** is a popular component-based JavaScript library for building responsive user interfaces with a declarative Virtual DOM paradigm.";
-      } else if (lower.includes("tech stack") || lower.includes("technical stack") || lower.includes("skills") || lower.includes("skill") || lower.includes("technologies") || lower.includes("stack") || lower.includes("languages")) {
+      console.error("Using client-side portfolio knowledge engine:", err);
+      // Smart contextual fallback engine for static deployments (GitHub Pages, Vercel static)
+      const lower = messageContent.toLowerCase().trim();
+      let fallbackText = "";
+      let fallbackAction: 'resume' | 'projects' | 'contact' | undefined;
+
+      // 1. Hiring, Employment, Collaboration, Contact inquiries
+      if (
+        lower.includes("hire") ||
+        lower.includes("how to hire") ||
+        lower.includes("how can hire") ||
+        lower.includes("hiring") ||
+        lower.includes("job") ||
+        lower.includes("recruitment") ||
+        lower.includes("recruit") ||
+        lower.includes("contact") ||
+        lower.includes("reach") ||
+        lower.includes("email") ||
+        lower.includes("opportunity") ||
+        lower.includes("freelance") ||
+        lower.includes("work with") ||
+        lower.includes("connect")
+      ) {
+        fallbackText = `Dharshini B is actively open for **Full-Time Full Stack Developer** roles and **Software Engineering** opportunities!
+
+**How you can reach out & hire her:**
+• **Direct Portfolio Message**: Scroll down to the **Get In Touch** section below to send a message directly to her inbox.
+• **LinkedIn**: [linkedin.com/in/dharshini-b-44a34124a/](https://linkedin.com/in/dharshini-b-44a34124a/)
+• **GitHub**: [github.com/dhars-hub](https://github.com/dhars-hub)
+• **Location**: Trichy, Tamil Nadu, India (Open to on-site & remote roles)
+
+Feel free to use the quick button below to jump straight to the contact form!`;
+        fallbackAction = 'contact';
+      }
+      // 2. Resume & CV Inquiries
+      else if (
+        lower.includes("resume") ||
+        lower.includes("cv") ||
+        lower.includes("curriculum vitae") ||
+        lower.includes("download resume") ||
+        lower.includes("view resume") ||
+        lower.includes("transcript")
+      ) {
+        fallbackText = `You can view and download Dharshini's complete resume in PDF format with her detailed academic records (9.00 CGPA MCA), technical stack, internships, and project milestones using the link below!`;
+        fallbackAction = 'resume';
+      }
+      // 3. Technical Stack & Skills Inquiries
+      else if (
+        lower.includes("tech stack") ||
+        lower.includes("technical stack") ||
+        lower.includes("skills") ||
+        lower.includes("skill") ||
+        lower.includes("technologies") ||
+        lower.includes("stack") ||
+        lower.includes("languages") ||
+        lower.includes("tools")
+      ) {
         fallbackText = `Dharshini's core **Technical Stack** includes:
 • **MERN Full Stack**: MongoDB, Express.js, React, Node.js
-• **Core Languages**: Python, Java, SQL, MySQL, PHP, C, JavaScript (ES6+)
-• **Frontend & UI/UX**: Tailwind CSS, HTML5, CSS3, Figma Design
-• **Specializations**: RESTful APIs, OpenCV Computer Vision, Full-Stack Web Architecture`;
-      } else if (lower.includes("mern")) {
-        fallbackText = "**MERN Stack** stands for MongoDB, Express.js, React, and Node.js—enabling full JavaScript full-stack application development from database to UI.";
+• **Core Programming Languages**: Python, Java, SQL, MySQL, PHP, C, JavaScript (ES6+)
+• **Frontend & UI/UX**: Tailwind CSS, HTML5, CSS3, Figma Design Prototyping
+• **Specializations**: RESTful API Design, Computer Vision (OpenCV), Full-Stack Architecture, Database Management`;
+      }
+      // 4. Projects inquiries
+      else if (
+        lower.includes("smile step") ||
+        lower.includes("smile") ||
+        lower.includes("disabilit")
+      ) {
+        fallbackText = `**Smile Steps** is Dharshini's featured MERN web application built specifically for children with developmental disabilities. It provides a calming, sensory-friendly interface with guided 2-minute visual brushing timers, habit trackers, and positive reinforcement reward milestones using MongoDB, Express, React, and Node.js.`;
+        fallbackAction = 'projects';
+      } else if (
+        lower.includes("toll") ||
+        lower.includes("gate") ||
+        lower.includes("license plate") ||
+        lower.includes("vehicle") ||
+        lower.includes("number plate")
+      ) {
+        fallbackText = `The **Automated Toll Gate System with License Plate Detection** uses Python, OpenCV, and Computer Vision to automatically identify vehicle registration plates in real time, calculate highway tolls, and log transaction records.`;
+        fallbackAction = 'projects';
+      } else if (
+        lower.includes("project") ||
+        lower.includes("portfolio work") ||
+        lower.includes("built") ||
+        lower.includes("showcase")
+      ) {
+        fallbackText = `Dharshini has built several impactful real-world projects:
+1. **Smile Steps**: Accessible MERN web app for children with developmental disabilities.
+2. **Automated Toll Gate System**: Python & OpenCV computer vision vehicle license plate recognition system.
+3. **Fitness & Healthcare Habit Tracker**: Full-stack routine logger and progress analytics dashboard.
+4. **Movie App UI Prototype**: Modern Figma user interface design system.`;
+        fallbackAction = 'projects';
+      }
+      // 5. Education & Academics
+      else if (
+        lower.includes("education") ||
+        lower.includes("cgpa") ||
+        lower.includes("college") ||
+        lower.includes("degree") ||
+        lower.includes("mca") ||
+        lower.includes("bca") ||
+        lower.includes("holy cross") ||
+        lower.includes("academic")
+      ) {
+        fallbackText = `Dharshini holds an outstanding academic record:
+• **Master of Computer Applications (MCA, 2025–2027)**: Holy Cross College (Autonomous), Trichy — **CGPA: 9.00**
+• **Bachelor of Computer Applications (BCA, 2022–2025)**: Holy Cross College (Autonomous), Trichy — **CGPA: 8.51**
+• **Higher Secondary (12th)**: 9.17 CGPA | **SSLC (10th)**: 8.82 CGPA`;
+      }
+      // 6. Internships & Experience
+      else if (
+        lower.includes("intern") ||
+        lower.includes("experience") ||
+        lower.includes("company") ||
+        lower.includes("internship studio") ||
+        lower.includes("unified mentor")
+      ) {
+        fallbackText = `Dharshini has completed two professional internships:
+1. **Full Stack Web Development Intern** at *Internship Studio*: Built full-stack web applications, responsive layouts, and backend API routes.
+2. **Web Development & UI/UX Design Intern** at *Unified Mentor*: Crafted interactive component libraries, design systems, and responsive user interfaces in Figma and frontend frameworks.`;
+      }
+      // 7. Workshops & Certifications
+      else if (
+        lower.includes("workshop") ||
+        lower.includes("seminar") ||
+        lower.includes("certificate") ||
+        lower.includes("certif")
+      ) {
+        fallbackText = `Key workshops & certifications attended:
+• **Two-Day National Workshop on "MERN Stack Development" (2026)**
+• **Two-Day National Seminar on "GenAI: Trends, Challenges, and Applications" (2025)**
+• **Global Technology Summit on "Data, AI & Computing" (2025)**
+• Certifications in Full Stack Development, Java, Python for Data Science, and UI/UX Design.`;
+      }
+      // 8. Greetings & Pleasantries
+      else if (
+        /^(hi|hello|hey|greetings|good\s*(morning|afternoon|evening)|howdy)\b/i.test(lower)
+      ) {
+        fallbackText = `Hello! How can I help you today? You can ask me how to hire Dharshini, inquire about her technical stack and projects (like *Smile Steps*), or ask any coding questions!`;
+      }
+      // 9. Technical Programming Concepts
+      else if (lower.includes("what is react") || lower.includes("explain react") || lower.includes("react")) {
+        fallbackText = `**React** is a popular component-based JavaScript library for building dynamic user interfaces. It uses a **Virtual DOM** to efficiently reconcile UI state changes and re-render only the components that need updating.`;
+      } else if (lower.includes("what is mern") || lower.includes("mern stack") || lower.includes("explain mern")) {
+        fallbackText = `**MERN Stack** stands for:
+• **M**ongoDB: NoSQL document database for flexible JSON data storage.
+• **E**xpress.js: Fast, minimalist web framework for Node.js API development.
+• **R**eact: Declarative frontend library for building interactive user interfaces.
+• **N**ode.js: JavaScript runtime environment for backend execution.`;
       } else if (lower.includes("python")) {
-        fallbackText = "**Python** is a versatile programming language utilized for web backends, automated scripting, and computer vision / AI applications.";
-      } else if (lower.includes("smile step")) {
-        fallbackText = "**Smile Steps** is Dharshini's featured MERN web app designed for children with developmental disabilities, featuring routine coaching timers and positive reward milestones.";
+        fallbackText = `**Python** is a versatile, high-level programming language widely used for web backend development, automated scripting, Data Science, and Computer Vision (OpenCV).`;
+      } else if (lower.includes("java")) {
+        fallbackText = `**Java** is a class-based, object-oriented programming language designed to "Write Once, Run Anywhere" (WORA), enforcing strong OOP concepts like Encapsulation, Inheritance, Polymorphism, and Abstraction.`;
+      } else if (lower.includes("sql") || lower.includes("database")) {
+        fallbackText = `**SQL (Structured Query Language)** is the standard language for relational database management (e.g., MySQL, PostgreSQL), enabling structured data schemas, table joins, and ACID transactional integrity.`;
+      } else if (lower.includes("who are you") || lower.includes("what can you do")) {
+        fallbackText = `I am Dharshini's AI Portfolio Assistant! I can help you with hiring inquiries, provide information on Dharshini's technical stack, education, and projects, or answer any programming questions.`;
+      } else {
+        fallbackText = `I'm happy to help! You can ask me how to hire Dharshini, explore her core technical stack, check her projects (like *Smile Steps*), or discuss web development topics. What would you like to know?`;
       }
 
       setMessages((prev) => [
@@ -146,6 +286,7 @@ Feel free to ask me anything about web development, technical programming concep
           role: 'assistant',
           content: fallbackText,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          action: fallbackAction
         }
       ]);
     } finally {
