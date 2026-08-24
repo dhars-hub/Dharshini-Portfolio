@@ -586,8 +586,8 @@ export const ProjectDemoModal: React.FC<ProjectDemoModalProps> = ({ project, onC
               {/* Header Overview */}
               <div className="bg-[#1a1b22] border border-[#818cf8]/20 p-4 rounded-xl flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-sm font-bold text-white font-display">Smile Steps Oral Health Hub</h3>
-                  <p className="text-xs text-[#94a3b8]">Interactive 2-minute brushing timer & daily pediatric habit tracker.</p>
+                  <h3 className="text-sm font-bold text-white font-display">Smile Steps</h3>
+                  <p className="text-xs text-[#94a3b8]">A child-friendly MERN web application for children with developmental disabilities.</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">

@@ -314,24 +314,24 @@ export const PROJECTS: Project[] = [
   {
     id: "proj-3",
     title: "Smile Steps",
-    badge: "WEB APPLICATION",
-    description: "An engaging digital pediatric and dental wellness web application designed to encourage consistent oral hygiene routines, healthy habit streaks, and milestone achievements.",
-    fullDescription: "Smile Steps is a specialized health and dental care tracking platform built to transform daily dental routines for children and young adults into fun, rewarding experiences. Includes interactive brushing timers, smile wellness checklists, milestone badges, and direct clinic coordination.",
-    tech: ["React", "JavaScript", "HTML5", "CSS3", "HealthTech"],
+    badge: "MERN WEB APPLICATION",
+    description: "A child-friendly MERN web application for children with developmental disabilities.",
+    fullDescription: "Smile Steps is a child-friendly MERN web application engineered for children with developmental disabilities. Built with MongoDB, Express.js, React, and Node.js, it offers sensory-friendly interfaces, engaging routines, positive reinforcement milestone trackers, and accessible interactive modules.",
+    tech: ["MERN Stack", "React", "Node.js", "Express.js", "MongoDB"],
     githubUrl: "https://github.com/dhars-hub/smileSteps",
     demoUrl: "https://github.com/dhars-hub/smileSteps",
     image: smileStepsImg,
     highlights: [
-      "Interactive 2-Minute Tooth Brushing coach with audio visual cues",
-      "Smile milestone achievement rewards & dental streak tracker",
-      "Oral hygiene tips & pediatric dental health guides",
-      "Family profile management and routine logs"
+      "Child-friendly sensory interface designed for children with developmental disabilities",
+      "Interactive 2-Minute structured routine coach with visual timers and audio cues",
+      "Positive reinforcement token milestones and progress streaks",
+      "Responsive MERN full-stack architecture with accessible UX design"
     ],
     features: [
-      "Live interactive brushing timer with progress animation",
-      "Daily morning & night habit checklist with reward tokens",
-      "Dental care progress tracking and symptom self-check guide",
-      "Responsive, kid-friendly and family-oriented user interface"
+      "Sensory-friendly interactive timer with soothing visual progress animations",
+      "Daily habit & milestone checklists with celebratory reward tokens",
+      "Adaptive interface tailored for accessible learning & developmental support",
+      "Full-stack MERN data flow supporting persistent progress tracking"
     ]
   },
   {

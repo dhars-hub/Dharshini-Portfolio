@@ -28,7 +28,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenDemo }) 
           <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(167,139,250,0.5)]"></div>
 
           <p className="text-sm sm:text-base text-[#94a3b8] font-body max-w-2xl mx-auto text-center leading-relaxed pt-1">
-            Real-world systems spanning automated toll gateways, fitness tracking platforms, healthcare clinic schedulers, and UI/UX prototypes.
+            Real-world systems spanning automated toll gateways, fitness survey platforms, child-friendly MERN applications, and UI/UX prototypes.
           </p>
         </div>
 
