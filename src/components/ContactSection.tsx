@@ -29,6 +29,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
+  const handleDirectEmailApp = () => {
+    const subject = encodeURIComponent(formData.subject || 'Portfolio Inquiry for Dharshini B');
+    const body = encodeURIComponent(
+      `Hi Dharshini,\n\nName: ${formData.name || 'Visitor'}\nEmail: ${formData.email || ''}\n\nMessage:\n${formData.message || ''}`
+    );
+    window.location.href = `mailto:${PERSONAL_INFO.email}?subject=${subject}&body=${body}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -40,9 +48,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitted),
-      });
+      }).catch(() => null);
 
-      // 2. Save locally for user history
+      // 2. Try FormSubmit public email delivery endpoint for direct mail delivery to Dharshini
+      await fetch(`https://formsubmit.co/ajax/${PERSONAL_INFO.email}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: submitted.name,
+          email: submitted.email,
+          _subject: `Portfolio Message from ${submitted.name}: ${submitted.subject || 'Inquiry'}`,
+          _replyto: submitted.email,
+          message: submitted.message,
+        }),
+      }).catch(() => null);
+
+      // 3. Save locally for user history
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
       existing.push({ ...submitted, timestamp: new Date().toISOString() });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
@@ -52,7 +76,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.warn('Backend fallback:', error);
+      console.warn('Contact submission fallback:', error);
       const existing = JSON.parse(localStorage.getItem('contact_messages') || '[]');
       existing.push({ ...submitted, timestamp: new Date().toISOString() });
       localStorage.setItem('contact_messages', JSON.stringify(existing));
@@ -255,20 +279,32 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3 rounded-full bg-[#818cf8] hover:bg-[#939cf8] text-[#101b8a] font-bold text-sm transition-all shadow-[0_0_20px_rgba(129,140,248,0.4)] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                  >
-                    {isSubmitting ? (
-                      <span>Sending Message...</span>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 py-3 rounded-full bg-[#818cf8] hover:bg-[#939cf8] text-[#101b8a] font-bold text-sm transition-all shadow-[0_0_20px_rgba(129,140,248,0.4)] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      {isSubmitting ? (
+                        <span>Sending Message...</span>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleDirectEmailApp}
+                      className="px-4 py-3 rounded-full bg-[#1a1b22] hover:bg-[#252733] border border-[#818cf8]/40 hover:border-[#818cf8] text-[#c6c5d5] hover:text-white font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      title="Open in your default email client"
+                    >
+                      <Mail className="w-4 h-4 text-[#818cf8]" />
+                      <span>Open Mail App</span>
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
